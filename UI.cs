@@ -113,7 +113,7 @@ namespace CivSem1Challenge2_CarSystem
                     {
                         System.Console.WriteLine("Invalid, enter again");
                     }
-                    this.Priceyear(num,price);
+                    this.Priceyear(num, price);
                     //TODO: print the listing of PRICE of UNDER OR EQUAL TO a given price and manufactured BEFORE a given year
                     break;
 
@@ -245,7 +245,7 @@ namespace CivSem1Challenge2_CarSystem
             }
             //adds car to list
             this.Cars.Add(new Car(rego, make, model, yom));
-            dealerreq:
+        dealerreq:
             System.Console.Write("Enter car dealer id to add the car to: ");
             while (!int.TryParse(Console.ReadLine(), out dealerId))
             {
@@ -253,14 +253,15 @@ namespace CivSem1Challenge2_CarSystem
             }
             //find dealer and add details to listing
             //break if dealerid is 9999 to not add to any list
-            if(dealerId == 9999){
+            if (dealerId == 9999)
+            {
                 return;
             }
             for (int o = 0; o < CarDealers.Count; o++)
             {
                 if (this.CarDealers[o].DealerId == dealerId)
                 {
-                    this.CarDealers[o].Listings.Add(new Listing(rego, make, model, yom, cost,price));
+                    this.CarDealers[o].Listings.Add(new Listing(rego, make, model, yom, cost, price));
                     return;
                 }
             }
@@ -273,22 +274,31 @@ namespace CivSem1Challenge2_CarSystem
             // (optional - CREDIT TASK)  If the dealer doesn't exist keep asking until a valid dealer id is entered.
             //                           User may enter 9999 for no dealer for the car to be entered into
         }
-        private void Priceyear(int year, int price){
-            for (int i = 0; i < Cars.Count; i++)
+        private void Priceyear(int year, int price)
+        //good luck LMAO
+        //first loop searches car dealers
+        //second loop searches car dealer listings
+        //first if statement confirms if year is BEFORE the year entered
+        //second if statement confirms if price is BELOW what was requested and then prints
+        {
+            for (int i = 0; i < CarDealers.Count; i++)
             {
-                if(Cars[i].YearOfManufacture < year){
-                    for (int o = 0; o < CarDealers.Count; o++)
-                    {   for (int u = 0; u < CarDealers[o].Listings.Count ; u++)
+                for (int u = 0; u < CarDealers[i].Listings.Count; u++)
+                {
+                    if (CarDealers[i].Listings[u].YearOfManufacture < year)
                     {
-                        if(CarDealers[o].Listings[u].Cost==price){
-                            Console.WriteLine();
+                        if (CarDealers[i].Listings[u].Cost < price)
+                        {
+                            Console.WriteLine($"Make:{CarDealers[i].Listings[u].Make} Model: {CarDealers[i].Listings[u].Model} price:{CarDealers[i].Listings[u].Price} Year:{CarDealers[i].Listings[u].YearOfManufacture}");
                         }
                     }
                 }
             }
+        return;
         }
 
-        //TODO: Create the GetNonDealerCars() method/function here
+        }
 
-    }
+    //TODO: Create the GetNonDealerCars() method/function here
+
 }

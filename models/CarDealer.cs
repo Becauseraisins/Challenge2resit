@@ -20,6 +20,6 @@ namespace CivSem1Challenge2_CarSystem.models {
         public string GetAddress () {
             return $"{this.StreetNo} {this.Street} {this.City}";
         }
-        public string 
+        
     }
 }
